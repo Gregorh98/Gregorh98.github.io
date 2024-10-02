@@ -5,91 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halloween Party Invitation</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #0c0c0c;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            overflow-x: hidden;
-        }
+        @font-face { font-family: Halloween; src: url('HallowenInline.otf'); }
 
-        h1 {
-            text-align: center;
-            font-size: 5em;
-            color: orange;
-            text-shadow: 0 0 5px black, 0 0 10px red;
-            animation: flicker 2s infinite;
-        }
+       body {
+           margin: 0;
+           padding: 0;
+           background: #0c0c0c;
+           color: #fff;
+           font-family: 'Courier New', Courier, monospace;
+           overflow-x: hidden;
+       }
 
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+       h1 {
+           text-align: center;
+           font-size: 5em;
+           color: orange;
+           text-shadow: 0 0 5px black, 0 0 10px red;
+           animation: flicker 2s infinite;
+          font-family: Halloween;
+       }
 
-        .container {
-            text-align: center;
-            position: relative;
-            top: 20%;
-        }
+       @keyframes flicker {
+           0%, 100% { opacity: 1; }
+           50% { opacity: 0.5; }
+       }
 
-        p {
-            margin: 20px;
-        }
+       .container {
+           text-align: center;
+           position: relative;
+           top: 20%;
+       }
 
-        .bat {
-            position: absolute;
-            animation: fly 10s linear infinite;
-            width: 200px;  /* Adjust the size of the bat here */
-            height: auto;  /* Maintain aspect ratio */
-        }
+       p {
+           margin: 20px;
+       }
 
-        @keyframes fly {
-            0% { top: 10%; left: -50px; }
-            20% { top: 30%; left: 25%; transform: rotate(15deg) scale(1.1); }
-            40% { top: 15%; left: 50%; transform: rotate(-10deg) scale(0.9); }
-            60% { top: 45%; left: 70%; transform: rotate(10deg) scale(1.2); }
-            80% { top: 20%; left: 85%; transform: rotate(-5deg) scale(1.0); }
-            100% { top: 10%; left: -50px; transform: rotate(0deg) scale(1); }
-        }
+       .bat {
+           position: absolute;
+           animation: fly 10s linear infinite;
+           width: 200px;  /* Adjust the size of the bat here */
+           height: auto;  /* Maintain aspect ratio */
+       }
 
-        #bat1 {
-            top: 20%;
-            left: 10%;
-            animation-duration: 8s;
-        }
+       @keyframes fly {
+           0% { top: 10%; left: -50px; }
+           20% { top: 30%; left: 25%; transform: rotate(15deg) scale(1.1); }
+           40% { top: 15%; left: 50%; transform: rotate(-10deg) scale(0.9); }
+           60% { top: 45%; left: 70%; transform: rotate(10deg) scale(1.2); }
+           80% { top: 20%; left: 85%; transform: rotate(-5deg) scale(1.0); }
+           100% { top: 10%; left: -50px; transform: rotate(0deg) scale(1); }
+       }
 
-        .invite-btn {
-            display: inline-block;
-            padding: 15px 30px;
-            margin-top: 30px;
-            background-color: #ff6600;
-            color: white;
-            text-decoration: none;
-            font-size: 1.2em;
-            border-radius: 8px;
-            box-shadow: 0 0 10px 2px #ff6600;
-            animation: pulse 1.5s infinite;
-        }
+       #bat1 {
+           top: 20%;
+           left: 10%;
+           animation-duration: 8s;
+       }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 10px 2px #ff6600; }
-            50% { box-shadow: 0 0 15px 5px #ff4500; }
-            100% { box-shadow: 0 0 10px 2px #ff6600; }
-        }
+       .invite-btn {
+           display: inline-block;
+           padding: 15px 30px;
+           margin-top: 30px;
+           background-color: #ff6600;
+           color: white;
+           text-decoration: none;
+           font-size: 1.2em;
+           border-radius: 8px;
+           box-shadow: 0 0 10px 2px #ff6600;
+           animation: pulse 1.5s infinite;
+       }
 
-        .invite-btn:hover {
-            background-color: #ff4500;
-            box-shadow: 0 0 15px 5px #ff4500;
-        }
-        .invite{
-            color: red;
-            padding: 20px;
-        }
-        .section{
-            padding-top: 50px;
-            padding-bottom:50px
-        }
+       @keyframes pulse {
+           0% { box-shadow: 0 0 10px 2px #ff6600; }
+           50% { box-shadow: 0 0 15px 5px #ff4500; }
+           100% { box-shadow: 0 0 10px 2px #ff6600; }
+       }
+
+       .invite-btn:hover {
+           background-color: #ff4500;
+           box-shadow: 0 0 15px 5px #ff4500;
+       }
+       .invite{
+           color: red;
+       }
+       .section{
+           padding-top: 50px;
+           padding-bottom:50px
+       }
     </style>
 </head>
 <body>
@@ -103,9 +105,9 @@
                 to
                 unveil
                 her latet invention, "Normallo"; a potion that can turn any monster into a normal human being with just
-                a
+                a single
                 swallow. </p>
-            <p>It will be positively defrightful!</p>
+            <p>It will be positively de<i>fright</i>ful!</p>
         </div>
     </div>
     <div class="section">
@@ -114,7 +116,7 @@
         <h3>Description</h3>
         <p>Decapitated soldier who carries a sword and chases travelers.</p>
         <h3>Costume Ideas</h3>
-        <p>High-collard cape to hide head, carries a sword and maybe his own head</p>
+        <p>High-collared cape to hide head, carries a sword and maybe his own head</p>
     </div>
     <div class="section">
         <h2>Party Info</h2>
