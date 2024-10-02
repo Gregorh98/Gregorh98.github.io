@@ -1,4 +1,4 @@
-@font-face { font-family: Halloween; src: url('../assets/HallowenInline.otf'); }
+@font-face { font-family: Halloween; src: url('HallowenInline.otf'); }
 
 body {
    margin: 0;
