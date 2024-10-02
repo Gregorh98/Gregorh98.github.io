@@ -20,10 +20,10 @@ h1 {
 h4 {
    text-align: center;
    font-size: 3em;
-   color: yellow;
-   text-shadow: 0 0 5px black, 0 0 10px red;
+   color: green;
+   text-shadow: 0 0 5px black, 0 0 10px green;
    animation: flicker 2s infinite;
-  font-family: Halloween;
+   font-family: Halloween;
 }
 
 h2 {
