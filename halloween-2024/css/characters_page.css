@@ -17,6 +17,15 @@ h1 {
   font-family: Halloween;
 }
 
+h4 {
+   text-align: center;
+   font-size: 3em;
+   color: yellow;
+   text-shadow: 0 0 5px black, 0 0 10px red;
+   animation: flicker 2s infinite;
+  font-family: Halloween;
+}
+
 h2 {
    text-align: center;
   font-size: 2em;
