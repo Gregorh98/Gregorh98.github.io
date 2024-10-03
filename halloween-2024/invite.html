@@ -8,7 +8,7 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/characters_page.css"/>
 </head>
-<body onload="create_bats(3)">
+<body onload="create_bats(3); generate_character_info('headless_horseman')">
 <h1 class="pt-3">Halloween Party 2024</h1>
 
 <div class="container">
@@ -17,21 +17,18 @@
         <div>
             <p>Calling all monsters,</p>
             <p><i>Madsy Entist</i>, the world-famous inventor, cordially invites you to a party at her haunted mansion
-                to
-                unveil
-                her latet invention, "Normallo"; a potion that can turn any monster into a normal human being with just
-                a single
-                swallow. </p>
+                to unveil her latet invention, "Normallo"; a potion that can turn any monster into a normal human being
+                with just a single swallow. </p>
             <p>It will be positively de<i>fright</i>ful!</p>
         </div>
     </div>
     <div class="section">
         <h2>Character</h2>
-        <p>You are...<h4>The Headless Horseman</h4></p>
+        <p>You are...<h4 id="character_name"></h4></p>
         <h3>Description</h3>
-        <p>Decapitated soldier who carries a sword and chases travelers.</p>
+        <p id="character_desc"></p>
         <h3>Costume Ideas</h3>
-        <p>High-collared cape to hide head, carries a sword and maybe his own head</p>
+        <p id="costume_desc"></p>
     </div>
     <div class="section">
         <h2>Party Info</h2>
@@ -51,6 +48,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script src="js/bats.js"></script>
+<script src="js/character.js"></script>
 
 </body>
 </html>
