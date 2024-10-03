@@ -4,9 +4,6 @@ function playMusic() {
     // Check if music is paused, if so, play it
     if (music.paused) {
         music.play();
-    }else
-    {
-        music.pause();
     }
 }
 
