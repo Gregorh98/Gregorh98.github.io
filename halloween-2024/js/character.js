@@ -11,6 +11,26 @@ function generate_character_info() {
             "name": "Headless Horseman",
             "desc": "Decapitated soldier who carries a sword and chases travelers.",
             "costume": "High-collared cape to hide head, carries a sword and maybe his own head"
+        },
+        "ogre_princess": {
+            "name": "Ogre Princess",
+            "desc": "",
+            "costume": ""
+        },
+        "bigfoot": {
+            "name": "Bigfoot",
+            "desc": "",
+            "costume": ""
+        },
+        "woolly_werewolf": {
+            "name": "Woolly Werewolf",
+            "desc": "",
+            "costume": ""
+        },
+        "frankenstein": {
+            "name": "Frankenstein",
+            "desc": "",
+            "costume": ""
         }
     }
 
