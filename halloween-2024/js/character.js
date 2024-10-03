@@ -26,7 +26,7 @@ function generate_character_info() {
         "bigfoot": {
             "name": "Bigfoot",
             "desc": "You are a mysterious, elusive creature that roams the forests. Known for your enormous size and gentle nature, you leave a trail of broken branches and large footprints behind you.",
-            "costume": "You might wear a full-body furry suit or a brown hoodie and pants with faux fur accents. Oversized slippers for feet and a simple mask or face paint could help mimic Bigfoot's features."
+            "costume": "You might wear a furry full-body suit or a brown hoodie and pants with faux fur accents. Oversized slippers for feet and a simple mask or face paint could help mimic Bigfoot's features."
         },
         "werewolf": {
             "name": "Werewolf",
