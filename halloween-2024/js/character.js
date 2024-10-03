@@ -1,6 +1,13 @@
+var music = new Audio('assets/music.mp3');
+
 function playMusic() {
-    let audio = new Audio('assets/music.mp3');
-    audio.play();
+    // Check if music is paused, if so, play it
+    if (music.paused) {
+        music.play();
+    }else
+    {
+        music.pause();
+    }
 }
 
 
