@@ -9,9 +9,8 @@ function create_bats(number) {
     }
 }
 
-function delete_bat(id)
-{
-    var audio = new Audio('assets/bat_splat.wav');
+function delete_bat(id) {
+    let audio = new Audio('assets/bat_splat.wav');
     audio.play();
     document.getElementById(id).hidden = true
 }

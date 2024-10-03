@@ -1,3 +1,9 @@
+function playMusic() {
+    let audio = new Audio('assets/music.mp3');
+    audio.play();
+}
+
+
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
