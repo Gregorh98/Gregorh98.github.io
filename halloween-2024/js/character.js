@@ -9,28 +9,28 @@ function generate_character_info() {
     let characters = {
         "headless_horseman": {
             "name": "Headless Horseman",
-            "desc": "A cursed soldier forever searching for his lost head. Clad in a tattered high-collared cape, he rides through the night on a ghostly steed, brandishing a sword with terrifying determination.",
-            "costume": "Flowing high-collared cape, dark armor, a sword, and a pumpkin or skull to represent his missing head."
+            "desc": "You are a cursed soldier forever searching for your lost head. Clad in a tattered high-collared cape, you ride through the night, brandishing a sword and creating an aura of terror wherever you go.",
+            "costume": "You might consider wearing a black cape with a high collar, dark pants, and boots. Carrying a toy sword and perhaps a pumpkin or skull prop could represent your missing head."
         },
         "ogre_princess": {
             "name": "Ogre Princess",
-            "desc": "A formidable giantess with a heart of gold for her mate, she rules her domain with a fearsome presence. With a booming voice and an even louder laugh, she’s both terrifying and endearing.",
-            "costume": "Royal gown made of rugged materials, oversized jewelry, and makeup that features exaggerated facial features, like bright green skin and wild hair."
+            "desc": "As a formidable giantess, you rule your domain with a fierce presence. With a booming voice and an even louder laugh, you’re both terrifying and endearing, especially to your mate.",
+            "costume": "You could opt for a colorful, tattered gown made from inexpensive fabric. Adding oversized costume jewelry and using face paint for green skin might enhance your look."
         },
         "bigfoot": {
             "name": "Bigfoot",
-            "desc": "A mysterious, elusive creature that roams the forests, known for its enormous size and gentle nature. Its presence is often marked by a trail of broken branches and large footprints.",
-            "costume": "A full-body furry suit with realistic detailing, oversized feet, and a mask with expressive eyes to showcase its playful personality."
+            "desc": "You are a mysterious, elusive creature that roams the forests. Known for your enormous size and gentle nature, you leave a trail of broken branches and large footprints behind you.",
+            "costume": "You might wear a full-body furry suit or a brown hoodie and pants with faux fur accents. Oversized slippers for feet and a simple mask or face paint could help mimic Bigfoot's features."
         },
         "werewolf": {
             "name": "Werewolf",
-            "desc": "A creature of the night, torn between human and beast, the werewolf howls at the moon. With razor-sharp claws and an insatiable hunger, they embody both horror and intrigue.",
-            "costume": "Tattered clothing, faux fur accents, a wolf mask with fangs, and makeup to create a fierce, animalistic look."
+            "desc": "You are a creature of the night, torn between human and beast. As you howl at the moon, your razor-sharp claws and insatiable hunger reveal the horror within.",
+            "costume": "Dressing in torn clothing or a flannel shirt with ripped jeans could work well. Adding faux fur gloves and a wolf mask or makeup might create an animalistic look that’s both scary and fun."
         },
         "frankenstein": {
             "name": "Frankenstein's Monster",
-            "desc": "An amalgamation of body parts, brought to life through unnatural means. This misunderstood creature yearns for acceptance in a world that fears him.",
-            "costume": "Patchwork clothing made from various fabrics, bolts on the neck, green skin makeup, and messy hair for an unsettling yet tragic appearance."
+            "desc": "You are an amalgamation of body parts, brought to life through unnatural means. Despite your intimidating appearance, you yearn for acceptance in a world that fears you.",
+            "costume": "You could wear a dark oversized jacket and pants, and add green face paint with stitches drawn on. Using faux bolts on your neck and messy hair might help capture the classic look."
         }
     };
 
