@@ -51,6 +51,11 @@ function generate_character_info() {
             "name": "Swamp Thingy",
             "desc": "You are a creature of the marsh, emerging from the depths of the swamp. Covered in mud and vines, you embody the untamed wild, blending in with nature while watching over your territory.",
             "costume": "You could wear a green bodysuit or clothing covered with leaves and fake vines. Using face paint to mimic swamp elements and adding moss or fake plants would enhance your look."
+        },
+        "fiancee_of_frankenstein": {
+            "name": "Fiancée of Frankenstein",
+            "desc": "You are the devoted and eerie counterpart to Frankenstein's Monster, a bride brought to life with a shock of white in your hair and a mysterious allure. Though you share his stitched-together past, you stand as an independent force, both elegant and unnerving.",
+            "costume": "A long white dress with ragged edges and bandages could evoke the classic look. Adding a tall, black wig with white streaks, pale face makeup, and dark eyeshadow will help complete the iconic image."
         }
     };
 
