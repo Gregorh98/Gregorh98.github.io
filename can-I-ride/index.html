@@ -14,73 +14,32 @@
 <body onload="update()">
 <div class="text-center centered-div">
     <div class="container-fluid">
-        <h1 class="m-3">Can I Ride?</h1>
+        <h1 class="m-3 display-1">Can I Ride Today?</h1>
         <div class="row">
-            <div class="col-md-3">
-                <div class="card m-2">
+            <div class="col-lg">
+                <div class="m-3">
                     <div class="card-body">
-                        <i class="large-icon bi bi-thermometer-half"></i>
-                        <table class="table">
-                            <thead>
-                            <th>AM</th>
-                            <th>PM</th>
-                            </thead>
-                            <tr>
-                                <td id="tempAM">1</td>
-                                <td id="tempPM">2</td>
-                            </tr>
-                        </table>
+                        <h1 class="large-text" id="verdict">Yes</h1>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg">
                 <div class="card m-2">
+                    <div class="card-header"><h3>Morning</h3></div>
                     <div class="card-body">
-                        <i class="large-icon bi bi-cloud-drizzle"></i>
-                        <table class="table">
-                            <thead>
-                            <th>AM</th>
-                            <th>PM</th>
-                            </thead>
-                            <tr>
-                                <td id="rainAM">1</td>
-                                <td id="rainPM">2</td>
-                            </tr>
-                        </table>
+                        <i class="large-icon bi bi-thermometer-half" id="am_temp"></i>
+                        <i class="large-icon bi bi-cloud-drizzle" id="am_rain"></i>
+                        <i class="large-icon bi bi-wind" id="am_wind"></i>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg">
                 <div class="card m-2">
+                    <div class="card-header"><h3>Evening</h3></div>
                     <div class="card-body">
-                        <i class="large-icon bi bi-wind"></i>
-                        <table class="table">
-                            <thead>
-                            <th>AM</th>
-                            <th>PM</th>
-                            </thead>
-                            <tr>
-                                <td id="windAM">1</td>
-                                <td id="windPM">2</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card m-2">
-                    <div class="card-body">
-                        <i class="large-icon bi bi-question-octagon"></i>
-                        <table class="table">
-                            <thead>
-                            <th>AM</th>
-                            <th>PM</th>
-                            </thead>
-                            <tr>
-                                <td id="gtgAM">1</td>
-                                <td id="gtgPM">2</td>
-                            </tr>
-                        </table>
+                        <i class="large-icon bi bi-thermometer-half" id="pm_temp"></i>
+                        <i class="large-icon bi bi-cloud-drizzle" id="pm_rain"></i>
+                        <i class="large-icon bi bi-wind" id="pm_wind"></i>
                     </div>
                 </div>
             </div>
