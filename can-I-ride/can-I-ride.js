@@ -49,14 +49,16 @@ function getWeatherSafety(weatherData) {
     return result;
 }
 
-async function update() {
+async function update(index = 1) {
     const url = "https://api.open-meteo.com/v1/forecast?latitude=55.8575&longitude=-3.169&hourly=temperature_2m,precipitation,wind_speed_10m&forecast_days=3";
     try {
         const response = await fetch(url);
         const data = await response.json();
         console.log(data)
         const processedWeatherData = getWeatherSafety(data);
-        const todaysData = processedWeatherData[Object.keys(processedWeatherData)[1]];
+
+        // Today = 0; Tomorrow = 1; Next again day = 2
+        const todaysData = processedWeatherData[Object.keys(processedWeatherData)[index]];
 
         // Update UI
         ['am', 'pm'].forEach(period => {
@@ -69,6 +71,8 @@ async function update() {
         const verdict = todaysData.verdict;
         document.getElementById("verdict").style.color = verdict ? "green" : "red";
         document.getElementById("verdict").innerText = verdict ? "Yes" : "No";
+        
+        document.getElementById("date").innerText = Object.keys(processedWeatherData)[index];
 
         console.log(processedWeatherData);
     } catch (error) {
