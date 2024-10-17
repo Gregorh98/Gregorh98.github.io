@@ -31,23 +31,26 @@ async function get_latest_weather_report() {
 
         for (let x in data.hourly.time) {
             let time = new Date(data.hourly.time[x]);
-            let rain = data.hourly.precipitation[x];
-            let temp = data.hourly.temperature_2m[x];
-            let wind = data.hourly.wind_speed_10m[x];
+            if (time >= new Date(Date.now() - 60 * 60 * 1000)) {
 
-            let rainDesc = rain < 0.1 ? "No Rain" : rain < 2.5 ? "Light Rain" : rain < 10 ? "Moderate Rain" : "Heavy Rain";
-            let tempDesc = temp < 0 ? "Freezing" : temp < 10 ? "Cold" : temp < 18 ? "Mild" : "Hot";
-            let windDesc = wind < 8 ? "Calm" : wind < 19 ? "Breezy" : wind < 47 ? "Windy" : "Stormy";
+                let rain = data.hourly.precipitation[x];
+                let temp = data.hourly.temperature_2m[x];
+                let wind = data.hourly.wind_speed_10m[x];
 
-            obj.push({
-                time: time,
-                rain: rain,
-                temp: temp,
-                wind: wind,
-                rainDesc: rainDesc,
-                tempDesc: tempDesc,
-                windDesc: windDesc
-            });
+                let rainDesc = rain < 0.1 ? "No Rain" : rain < 2.5 ? "Light Rain" : rain < 10 ? "Moderate Rain" : "Heavy Rain";
+                let tempDesc = temp < 0 ? "Freezing" : temp < 10 ? "Cold" : temp < 18 ? "Mild" : "Hot";
+                let windDesc = wind < 8 ? "Calm" : wind < 19 ? "Breezy" : wind < 47 ? "Windy" : "Stormy";
+
+                obj.push({
+                    time: time,
+                    rain: rain,
+                    temp: temp,
+                    wind: wind,
+                    rainDesc: rainDesc,
+                    tempDesc: tempDesc,
+                    windDesc: windDesc
+                });
+            }
         }
         return obj;
 
