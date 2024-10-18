@@ -1,5 +1,5 @@
 .large-icon {
-    font-size: 4rem;
+    font-size: 2rem;
     margin: 20px;
 }
 
@@ -13,4 +13,43 @@
     padding: 10px;
     border-radius: 5px;
     background-color: #f9f9f9;
+    min-width: 150px; /* Set a minimum width for each weather report block */
+
+}
+
+.hstack {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 10px; /* Optional: Adds space between weather items */
+}
+
+.card {
+    margin: 10px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+body {
+    background: azure;
+}
+
+.warn-0 {
+    color: green;
+}
+
+.warn-1 {
+    color: greenyellow;
+}
+
+.warn-2 {
+    color: yellow;
+}
+
+.warn-3 {
+    color: orange;
+}
+
+.warn-4 {
+    color: red;
 }
