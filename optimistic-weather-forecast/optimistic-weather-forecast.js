@@ -1,63 +1,106 @@
-async function get_latest_weather_report() {
-    let url = "https://api.open-meteo.com/v1/forecast?latitude=55.8575&longitude=-3.169&hourly=temperature_2m,precipitation,wind_speed_10m";
+// Function to get the user's current position
+function getCurrentLocation() {
+    return new Promise((resolve, reject) => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => resolve(position),
+                error => reject(error)
+            );
+        } else {
+            reject(new Error("Geolocation is not supported by this browser."));
+        }
+    });
+}
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function (position) {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                const reverseGeocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
-
-                fetch(reverseGeocodeUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        const nearestTown = data.address.town || data.address.city || data.address.village || 'Not found';
-                        url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation,wind_speed_10m`;
-                        console.log('Nearest Town:', nearestTown);
-                        document.getElementById("loc").innerText = `Weather forecast for:\n${nearestTown}`;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching nearest town:', error);
-                    });
-            }
-        );
-    }
+// Function to get the nearest town or city based on latitude and longitude
+async function getNearestTown(latitude, longitude) {
+    const reverseGeocodeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(reverseGeocodeUrl);
         const data = await response.json();
-
-        let obj = []
-
-        for (let x in data.hourly.time) {
-            let time = new Date(data.hourly.time[x]);
-            if (time >= new Date(Date.now() - 60 * 60 * 1000)) {
-
-                let rain = data.hourly.precipitation[x];
-                let temp = data.hourly.temperature_2m[x];
-                let wind = data.hourly.wind_speed_10m[x];
-
-                let rainDesc = rain < 0.1 ? "No Rain" : rain < 2.5 ? "Light Rain" : rain < 10 ? "Moderate Rain" : "Heavy Rain";
-                let tempDesc = temp < 0 ? "Freezing" : temp < 10 ? "Cold" : temp < 18 ? "Mild" : "Hot";
-                let windDesc = wind < 8 ? "Calm" : wind < 19 ? "Breezy" : wind < 47 ? "Windy" : "Stormy";
-
-                obj.push({
-                    time: time,
-                    rain: rain,
-                    temp: temp,
-                    wind: wind,
-                    rainDesc: rainDesc,
-                    tempDesc: tempDesc,
-                    windDesc: windDesc
-                });
-            }
-        }
-        return obj;
-
+        const nearestTown = data.address.town || data.address.city || data.address.village || 'Not found';
+        document.getElementById("loc").innerHTML = `<h5>Optimistic Weather Forecast For:</h5><b>\n${nearestTown}</b>`;
+        return nearestTown;
     } catch (error) {
-        console.log(error);
+        console.error('Error fetching nearest town:', error);
+        throw error;
     }
 }
+
+// Function to get weather data based on latitude and longitude
+async function getWeatherData(latitude, longitude) {
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m,precipitation,wind_speed_10m`;
+
+    try {
+        const response = await fetch(weatherUrl);
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching weather data:', error);
+        throw error;
+    }
+}
+
+// Function to process the weather data and group it by date
+function processWeatherData(weatherData) {
+    let groupedData = {};
+
+    for (let x in weatherData.hourly.time) {
+        let datetime = new Date(weatherData.hourly.time[x]);
+        if (datetime >= new Date(Date.now() - 60 * 60 * 1000)) {
+            let rain = weatherData.hourly.precipitation[x];
+            let temp = weatherData.hourly.temperature_2m[x];
+            let wind = weatherData.hourly.wind_speed_10m[x];
+
+            let rainDesc = rain < 0.1 ? "No Rain" : rain < 2.5 ? "Light Rain" : rain < 10 ? "Moderate Rain" : "Heavy Rain";
+            let tempDesc = temp < 0 ? "Freezing" : temp < 10 ? "Cold" : temp < 18 ? "Mild" : "Hot";
+            let windDesc = wind < 8 ? "Calm" : wind < 19 ? "Breezy" : wind < 47 ? "Windy" : "Stormy";
+
+            let dayStr = datetime.toLocaleDateString('en-GB', {weekday: 'long'});
+            let dateStr = datetime.toLocaleDateString('en-GB');
+            let timeStr = datetime.toLocaleTimeString('en-GB', {hour: '2-digit', minute: '2-digit', hour12: true});
+
+            let timeData = {
+                time: timeStr,
+                rain: rain,
+                rainDesc: rainDesc,
+                temp: temp,
+                tempDesc: tempDesc,
+                wind: wind,
+                windDesc: windDesc
+            };
+
+            if (!groupedData[dateStr]) {
+                groupedData[dateStr] = {
+                    date: dateStr,
+                    day: dayStr,
+                    data: []
+                };
+            }
+
+            groupedData[dateStr].data.push(timeData);
+        }
+    }
+
+    return Object.values(groupedData);
+}
+
+// Main function to get the latest weather report
+async function get_latest_weather_report() {
+    try {
+        const position = await getCurrentLocation();
+        const {latitude, longitude} = position.coords;
+
+        await getNearestTown(latitude, longitude);
+
+        const weatherData = await getWeatherData(latitude, longitude);
+        return processWeatherData(weatherData);
+    } catch (error) {
+        console.error('Error in getting weather report:', error);
+        document.getElementById("loc").innerHTML = `<h5>Error:</h5><b>\n${error.message}</b>`;
+    }
+}
+
 
 async function update() {
     let latest_weather_report = await get_latest_weather_report();
@@ -69,30 +112,126 @@ async function update() {
     latest_weather_report.forEach(report => {
         // Create a div for each report
         let reportDiv = document.createElement('div');
-        reportDiv.className = 'weather-report';
+        reportDiv.className = 'card';
 
-        // Add the time
-        let time = document.createElement('p');
-        time.innerText = `${new Date(report.time).toLocaleString()}`;
-        reportDiv.appendChild(time);
+        // Add the day
+        let day = document.createElement('h3');
+        day.innerText = report.day;
+        reportDiv.appendChild(day);
 
-        // Add rain description
-        let rain = document.createElement('p');
-        rain.innerText = `${report.rainDesc} (${report.rain} mm)`;
-        reportDiv.appendChild(rain);
-
-        // Add temperature description
-        let temp = document.createElement('p');
-        temp.innerText = `Temperature: ${report.tempDesc} (${report.temp}°C)`;
-        reportDiv.appendChild(temp);
-
-        // Add wind description
-        let wind = document.createElement('p');
-        wind.innerText = `Wind: ${report.windDesc} (${report.wind} km/h)`;
-        reportDiv.appendChild(wind);
+        // Add the date
+        let date = document.createElement('small');
+        date.innerText = report.date;
+        reportDiv.appendChild(date);
 
         // Append the report div to the container
         weatherContainer.appendChild(reportDiv);
+
+
+        let timesDiv = document.createElement('div');
+        timesDiv.className = 'hstack';
+        reportDiv.appendChild(timesDiv);
+
+        report.data.forEach(timeData => {
+            let timeDiv = document.createElement('div');
+            timeDiv.className = 'card-body';
+
+            // Add rain description
+            let time = document.createElement('h5');
+            time.innerText = timeData.time;
+            timeDiv.appendChild(time);
+
+            // Add rain description
+            timeDiv.appendChild(getIconElement(timeData.rainDesc));
+            let rain = document.createElement('p');
+            rain.innerText = `${timeData.rainDesc} (${timeData.rain} mm)`;
+            timeDiv.appendChild(rain);
+
+
+            // Add temperature description
+            timeDiv.appendChild(getIconElement(timeData.tempDesc));
+            let temp = document.createElement('p');
+            temp.innerText = `${timeData.tempDesc} (${timeData.temp}°C)`;
+            timeDiv.appendChild(temp);
+
+            // Add wind description
+            timeDiv.appendChild(getIconElement(timeData.windDesc));
+            let wind = document.createElement('p');
+            wind.innerText = `${timeData.windDesc} (${timeData.wind} km/h)`;
+            timeDiv.appendChild(wind);
+
+            // Append the report div to the container
+            timesDiv.appendChild(timeDiv);
+
+        });
     });
 }
 
+function getIconElement(input) {
+    let icon = document.createElement('i');
+    let iconClass = "";
+    let colourClass = "";
+    switch (input) {
+        case "No Rain":
+            iconClass = "bi-cloud-slash";
+            colourClass = "warn-0"
+            break;
+        case "Light Rain":
+            iconClass = "bi-cloud-drizzle";
+            colourClass = "warn-1"
+            break;
+        case "Moderate Rain":
+            iconClass = "bi-cloud-rain";
+            colourClass = "warn-2"
+            break;
+        case "Heavy Rain":
+            iconClass = "bi-cloud-rain-heavy";
+            colourClass = "warn-4"
+            break;
+        case "Freezing":
+            iconClass = "bi-thermometer-snow";
+            colourClass = "warn-4"
+            break;
+        case "Cold":
+            iconClass = "bi-thermometer";
+            colourClass = "warn-2"
+            break;
+        case "Mild":
+            iconClass = "bi-thermometer-half";
+            colourClass = "warn-1"
+            break;
+        case "Hot":
+            iconClass = "bi-thermometer-sun";
+            colourClass = "warn-0"
+            break;
+        case "Calm":
+            iconClass = "bi-wind";
+            colourClass = "warn-0"
+            break;
+        case "Breezy":
+            iconClass = "bi-wind";
+            colourClass = "warn-1"
+            break;
+        case "Windy":
+            iconClass = "bi-wind";
+            colourClass = "warn-2"
+            break;
+        case "Stormy":
+            iconClass = "bi-tornado";
+            colourClass = "warn-4"
+            break;
+        default:
+            iconClass = "bi-question";
+            colourClass = "warn-4"
+            break;
+    }
+    icon.classList.add("bi", "large-icon");
+    if (colourClass !== "") {
+        icon.classList.add(colourClass);
+    }
+    if (iconClass !== "") {
+        icon.classList.add(iconClass);
+    }
+    return icon;
+
+}
