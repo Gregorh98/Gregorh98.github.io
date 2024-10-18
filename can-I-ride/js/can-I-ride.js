@@ -71,11 +71,23 @@ async function update(index = 1) {
         const verdict = todaysData.verdict;
         document.getElementById("verdict").style.color = verdict ? "green" : "red";
         document.getElementById("verdict").innerText = verdict ? "Yes" : "No";
-        
-        document.getElementById("date").innerText = Object.keys(processedWeatherData)[index];
+
+        document.getElementById("date").innerText = `(${index === 0 ? "Today" : "Tomorrow"})`;
 
         console.log(processedWeatherData);
     } catch (error) {
         console.log(error);
     }
+}
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+            .then((registration) => {
+                console.log('ServiceWorker registered:', registration);
+            })
+            .catch((error) => {
+                console.log('ServiceWorker registration failed:', error);
+            });
+    });
 }
