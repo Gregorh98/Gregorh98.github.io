@@ -20,7 +20,7 @@ async function getNearestTown(latitude, longitude) {
         const response = await fetch(reverseGeocodeUrl);
         const data = await response.json();
         const nearestTown = data.address.town || data.address.city || data.address.village || 'Not found';
-        document.getElementById("loc").innerHTML = `Weather forecast for:<b>\n${nearestTown}</b>`;
+        document.getElementById("loc").innerHTML = `<h5>Optimistic Weather Forecast For:</h5><b>\n${nearestTown}</b>`;
         return nearestTown;
     } catch (error) {
         console.error('Error fetching nearest town:', error);
@@ -97,7 +97,7 @@ async function get_latest_weather_report() {
         return processWeatherData(weatherData);
     } catch (error) {
         console.error('Error in getting weather report:', error);
-        document.getElementById("loc").innerText = 'Error in getting weather report:\n' + error.message;
+        document.getElementById("loc").innerHTML = `<h5>Error:</h5><b>\n${error.message}</b>`;
     }
 }
 
@@ -173,7 +173,7 @@ function getIconElement(input) {
     let colourClass = "";
     switch (input) {
         case "No Rain":
-            iconClass = "bi-cloud-sun";
+            iconClass = "bi-cloud-slash";
             colourClass = "warn-0"
             break;
         case "Light Rain":
@@ -189,19 +189,19 @@ function getIconElement(input) {
             colourClass = "warn-4"
             break;
         case "Freezing":
-            iconClass = "bi-snow";
+            iconClass = "bi-thermometer-snow";
             colourClass = "warn-4"
             break;
         case "Cold":
-            iconClass = "bi-cloud-snow";
+            iconClass = "bi-thermometer";
             colourClass = "warn-2"
             break;
         case "Mild":
-            iconClass = "bi-cloud-sun";
+            iconClass = "bi-thermometer-half";
             colourClass = "warn-1"
             break;
         case "Hot":
-            iconClass = "bi-sun";
+            iconClass = "bi-thermometer-sun";
             colourClass = "warn-0"
             break;
         case "Calm":
@@ -217,7 +217,7 @@ function getIconElement(input) {
             colourClass = "warn-2"
             break;
         case "Stormy":
-            iconClass = "bi-wind";
+            iconClass = "bi-tornado";
             colourClass = "warn-4"
             break;
         default:
