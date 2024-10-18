@@ -25,18 +25,18 @@
 }
 
 .card {
+    font-family: Arial, sans-serif;
+    /*font-family: Weather;*/
     margin: 10px;
     margin-top: 20px;
-    padding: 10px;
-    border-color: black;
+    border-color: white;
+    background: none;
 }
 
-.white-background {
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
+.no-card-features {
+    border-width: 0;
+    padding-bottom: 20px;
+    padding-top: 20px
 }
 
 body {
@@ -61,4 +61,20 @@ body {
 
 .warn-4 {
     color: red;
+}
+
+.card-header {
+    background: rgba(256, 256, 256, .2);
+    border-color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.card-body {
+    background: none;
+    border-color: white;
+}
+
+.white {
+    color: white;
 }
