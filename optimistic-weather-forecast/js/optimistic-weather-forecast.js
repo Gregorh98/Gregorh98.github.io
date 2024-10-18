@@ -20,7 +20,7 @@ async function getNearestTown(latitude, longitude) {
         const response = await fetch(reverseGeocodeUrl);
         const data = await response.json();
         const nearestTown = data.address.town || data.address.city || data.address.village || 'Not found';
-        document.getElementById("loc").innerHTML = `<h5>Optimistic Weather Forecast For:</h5><b>\n${nearestTown}</b>`;
+        document.getElementById("loc").innerHTML = `<h6>Optimistic Weather Forecast For\n</h6><b>${nearestTown}</b>`;
         return nearestTown;
     } catch (error) {
         console.error('Error fetching nearest town:', error);
@@ -114,30 +114,37 @@ async function update() {
         let reportDiv = document.createElement('div');
         reportDiv.className = 'card';
 
+        let reportHeader = document.createElement('div');
+        reportHeader.className = 'card-header';
+
         // Add the day
-        let day = document.createElement('h3');
+        let day = document.createElement('h2');
         day.innerText = report.day;
-        reportDiv.appendChild(day);
+        reportHeader.appendChild(day);
 
         // Add the date
         let date = document.createElement('small');
         date.innerText = report.date;
-        reportDiv.appendChild(date);
+        reportHeader.appendChild(date);
 
         // Append the report div to the container
+        reportDiv.appendChild(reportHeader);
         weatherContainer.appendChild(reportDiv);
 
+        let reportBody = document.createElement('div');
+        reportBody.className = 'card-body';
 
         let timesDiv = document.createElement('div');
         timesDiv.className = 'hstack';
-        reportDiv.appendChild(timesDiv);
+        reportBody.appendChild(timesDiv);
+        reportDiv.appendChild(reportBody);
 
         report.data.forEach(timeData => {
             let timeDiv = document.createElement('div');
             timeDiv.className = 'card-body';
 
             // Add rain description
-            let time = document.createElement('h5');
+            let time = document.createElement('h4');
             time.innerText = timeData.time;
             timeDiv.appendChild(time);
 
@@ -165,6 +172,20 @@ async function update() {
 
         });
     });
+    VANTA.FOG({
+        el: "#background",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        highlightColor: 0x89ff,
+        midtoneColor: 0xffffff,
+        lowlightColor: 0xffffff,
+        baseColor: 0xd4f2f2,
+        speed: 2,
+        zoom: 1.4
+    })
 }
 
 function getIconElement(input) {
