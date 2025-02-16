@@ -1,4 +1,5 @@
 # Gregor's Projects
+[View Site](https://gregorh98.github.io/)
 
 ## Halloween Invites 2024
 
