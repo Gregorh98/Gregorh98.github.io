@@ -1,7 +1,7 @@
 var canvas = document.getElementById('canvas');
 
-var canvasWidth = 640;
-var canvasHeight = 480;
+var canvasWidth = window.innerWidth -24;
+var canvasHeight = window.innerHeight-24;
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 
@@ -337,6 +337,22 @@ class Game {
             this.mouse_x = e.clientX - rect.left;
             this.mouse_y = e.clientY - rect.top;
         });
+
+        canvas.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            g.mouse_x = touch.clientX - rect.left;
+            g.mouse_y = touch.clientY - rect.top;
+        }, { passive: false });
+
+        canvas.addEventListener("touchmove", (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            g.mouse_x = touch.clientX - rect.left;
+            g.mouse_y = touch.clientY - rect.top;
+        }, { passive: false });
     }
 
     generate_pens(pen_count) {
