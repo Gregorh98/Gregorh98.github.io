@@ -1,3 +1,66 @@
+.ride-app {
+    --ride-ink: #17201b;
+    --ride-muted: #607064;
+    --ride-panel: rgba(255, 255, 255, 0.9);
+    --ride-border: rgba(23, 32, 27, 0.12);
+    --ride-safe: green;
+    --ride-unsafe: red;
+    --ride-row: rgba(255, 255, 255, 0.7);
+    --ride-row-alt: rgba(238, 243, 239, 0.78);
+    --ride-shadow: 0 24px 70px rgba(18, 38, 28, 0.18);
+    position: relative;
+    padding: 2rem 1rem;
+    color: var(--ride-ink);
+    font-family: "Atkinson Hyperlegible", Verdana, sans-serif;
+    overflow: hidden;
+}
+
+.ride-app::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(135deg, rgba(237, 250, 239, 0.92), rgba(220, 237, 236, 0.78) 45%, rgba(249, 244, 230, 0.9)),
+        radial-gradient(circle at 15% 20%, rgba(109, 171, 120, 0.24), transparent 28%),
+        radial-gradient(circle at 82% 78%, rgba(230, 170, 94, 0.2), transparent 26%);
+}
+
+.ride-panel {
+    width: min(1120px, 100%);
+    padding: 1.25rem;
+    border: 1px solid var(--ride-border);
+    border-radius: 8px;
+    background: var(--ride-panel);
+    box-shadow: var(--ride-shadow);
+    backdrop-filter: blur(12px);
+}
+
+.ride-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0.25rem 1.25rem;
+    text-align: left;
+}
+
+.ride-kicker {
+    margin: 0 0 0.2rem;
+    color: var(--ride-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.ride-header h1 {
+    margin: 0;
+    font-size: clamp(2.4rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 0.95;
+}
+
 .large-icon {
     font-size: 3rem;
     margin: 20px;
@@ -9,4 +72,279 @@
 
 .spaced {
     padding-bottom: 40px;
+}
+
+.weekly-table-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    border: 1px solid var(--ride-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.68);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.weekly-table {
+    min-width: 720px;
+    margin-bottom: 0;
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: var(--ride-row-alt);
+    --bs-table-color: var(--ride-ink);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.weekly-table thead th {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid var(--ride-border);
+    color: var(--ride-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.weekly-table th:nth-child(n + 2),
+.weekly-table td:nth-child(n + 2) {
+    text-align: center;
+}
+
+.weekly-table tbody th,
+.weekly-table tbody td {
+    padding: 1rem 0.75rem;
+    border-color: var(--ride-border);
+}
+
+.weekly-table tbody tr {
+    background: var(--ride-row);
+}
+
+.ride-row-safe {
+    box-shadow: inset 5px 0 0 color-mix(in srgb, var(--ride-safe) 70%, white);
+}
+
+.ride-row-unsafe {
+    box-shadow: inset 5px 0 0 color-mix(in srgb, var(--ride-unsafe) 70%, white);
+}
+
+.weekly-icon {
+    font-size: 2rem;
+    margin: 0 0.35rem;
+    vertical-align: middle;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.weather-icons {
+    display: inline-grid;
+    grid-template-columns: repeat(3, auto);
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+}
+
+.day-label,
+.verdict-cell,
+.certainty-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.day-label {
+    display: inline-block;
+}
+
+.weekly-table small {
+    color: var(--ride-muted) !important;
+    font-weight: 700;
+}
+
+.is-safe {
+    color: var(--ride-safe);
+}
+
+.is-unsafe {
+    color: var(--ride-unsafe);
+}
+
+.verdict-cell.is-safe {
+    color: var(--ride-safe);
+}
+
+.verdict-cell.is-unsafe {
+    color: var(--ride-unsafe);
+}
+
+.verdict-pill {
+    display: inline-flex;
+    min-width: 4.4rem;
+    justify-content: center;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+    line-height: 1;
+}
+
+.certainty-score {
+    display: inline-block;
+    min-width: 3.2rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.certainty-bar {
+    display: block;
+    width: min(5.6rem, 100%);
+    height: 0.45rem;
+    margin: 0.45rem auto 0;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(96, 112, 100, 0.18);
+}
+
+.certainty-bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: currentColor;
+}
+
+@media (max-width: 576px) {
+    .ride-app {
+        padding: 0.75rem;
+    }
+
+    .centered-div {
+        align-items: flex-start;
+    }
+
+    .ride-panel {
+        padding: 0.75rem;
+    }
+
+    .ride-header {
+        display: block;
+        padding: 0.15rem 0 0.75rem;
+        text-align: center;
+    }
+
+    .ride-kicker {
+        font-size: 0.7rem;
+    }
+
+    .ride-header h1 {
+        font-size: 2.3rem;
+    }
+
+    .weekly-table {
+        min-width: 0;
+        table-layout: fixed;
+    }
+
+    .weekly-table th,
+    .weekly-table td {
+        padding: 0.55rem 0.2rem;
+    }
+
+    .weekly-table thead th {
+        font-size: 0.63rem;
+        letter-spacing: 0;
+        text-transform: none;
+    }
+
+    .weekly-table th:first-child {
+        width: 24%;
+    }
+
+    .weekly-table th:nth-child(2),
+    .weekly-table th:nth-child(3) {
+        width: 25%;
+    }
+
+    .weekly-table th:last-child {
+        width: 26%;
+    }
+
+    .weekly-icon {
+        font-size: 1.15rem;
+        margin: 0;
+    }
+
+    .weather-icons {
+        gap: 0.12rem;
+    }
+
+    .day-label,
+    .verdict-cell,
+    .certainty-score {
+        font-size: 0.95rem;
+        line-height: 1.2;
+    }
+
+    .certainty-bar {
+        width: 2.5rem;
+        height: 0.35rem;
+        margin-top: 0.28rem;
+    }
+
+    .certainty-score {
+        min-width: 2rem;
+    }
+
+    .verdict-pill {
+        min-width: 2.65rem;
+        padding: 0.3rem 0.35rem;
+    }
+
+    .weekly-table small {
+        font-size: 0.62rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .ride-app {
+        padding: 0.45rem;
+    }
+
+    .ride-panel {
+        padding: 0.45rem;
+    }
+
+    .weekly-table th,
+    .weekly-table td {
+        padding: 0.48rem 0.12rem;
+    }
+
+    .weekly-icon {
+        font-size: 1rem;
+    }
+
+    .weather-icons {
+        gap: 0.08rem;
+    }
+
+    .day-label,
+    .verdict-cell,
+    .certainty-score {
+        font-size: 0.78rem;
+    }
+
+    .certainty-score {
+        min-width: 1.85rem;
+    }
+
+    .certainty-bar {
+        width: 2.1rem;
+    }
+
+    .verdict-pill {
+        min-width: 2.3rem;
+        padding: 0.26rem 0.22rem;
+    }
+
+    .weekly-table small {
+        font-size: 0.55rem;
+    }
 }

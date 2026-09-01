@@ -1,3 +1,9 @@
+const SAFETY_THRESHOLDS = {
+    minTemp: 4,
+    maxRain: 0.1,
+    maxWind: 60
+};
+
 function getWeatherSafety(weatherData) {
     const result = {};
 
@@ -28,20 +34,25 @@ function getWeatherSafety(weatherData) {
                 wind: windData[pmIndex]
             };
 
-            // Determine weather safety
-            const isSafe = ({temp, rain, wind}) => (temp > 4 && rain < 0.1 && wind < 60);
+            const isSafe = ({temp, rain, wind}) => (
+                temp > SAFETY_THRESHOLDS.minTemp
+                && rain < SAFETY_THRESHOLDS.maxRain
+                && wind < SAFETY_THRESHOLDS.maxWind
+            );
+
             result[date] = {
                 am: {
-                    temp: amData.temp > 4,
-                    rain: amData.rain < 0.1,
-                    wind: amData.wind < 60
+                    temp: amData.temp > SAFETY_THRESHOLDS.minTemp,
+                    rain: amData.rain < SAFETY_THRESHOLDS.maxRain,
+                    wind: amData.wind < SAFETY_THRESHOLDS.maxWind
                 },
                 pm: {
-                    temp: pmData.temp > 4,
-                    rain: pmData.rain < 0.1,
-                    wind: pmData.wind < 60
+                    temp: pmData.temp > SAFETY_THRESHOLDS.minTemp,
+                    rain: pmData.rain < SAFETY_THRESHOLDS.maxRain,
+                    wind: pmData.wind < SAFETY_THRESHOLDS.maxWind
                 },
-                verdict: isSafe(amData) && isSafe(pmData)
+                verdict: isSafe(amData) && isSafe(pmData),
+                certainty: calculateCertainty([amData, pmData])
             };
         }
     });
@@ -49,32 +60,107 @@ function getWeatherSafety(weatherData) {
     return result;
 }
 
-async function update(index = 1) {
-    const url = "https://api.open-meteo.com/v1/forecast?latitude=55.8575&longitude=-3.169&hourly=temperature_2m,precipitation,wind_speed_10m&forecast_days=3";
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
+function calculateMetricCertainty(margin, scale) {
+    return clamp(50 + (Math.abs(margin) / scale) * 50, 50, 100);
+}
+
+function calculateCertainty(periods) {
+    const scores = periods.flatMap(({temp, rain, wind}) => [
+        calculateMetricCertainty(temp - SAFETY_THRESHOLDS.minTemp, 6),
+        calculateMetricCertainty(SAFETY_THRESHOLDS.maxRain - rain, 1),
+        calculateMetricCertainty(SAFETY_THRESHOLDS.maxWind - wind, 30)
+    ]);
+
+    return Math.round(Math.min(...scores));
+}
+
+function getSafetyClass(isSafe) {
+    return isSafe ? "is-safe" : "is-unsafe";
+}
+
+function getCertaintyLabel(certainty) {
+    if (certainty >= 80) {
+        return "High";
+    }
+
+    if (certainty >= 65) {
+        return "Medium";
+    }
+
+    return "Low";
+}
+
+function createWeatherIcons(periodData) {
+    return `
+        <span class="weather-icons">
+            <i class="large-icon weekly-icon bi bi-thermometer-half ${getSafetyClass(periodData.temp)}"></i>
+            <i class="large-icon weekly-icon bi bi-cloud-drizzle ${getSafetyClass(periodData.rain)}"></i>
+            <i class="large-icon weekly-icon bi bi-wind ${getSafetyClass(periodData.wind)}"></i>
+        </span>
+    `;
+}
+
+function formatDateLabel(date, index) {
+    if (index === 0) {
+        return "Today";
+    }
+
+    if (index === 1) {
+        return "Tomorrow";
+    }
+
+    return new Date(`${date}T12:00:00`).toLocaleDateString("en-GB", {
+        weekday: "long"
+    });
+}
+
+function formatShortDate(date) {
+    return new Date(`${date}T12:00:00`).toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short"
+    });
+}
+
+function renderWeeklyForecast(processedWeatherData) {
+    const tableBody = document.getElementById("weekly_forecast");
+    tableBody.innerHTML = "";
+
+    Object.entries(processedWeatherData).slice(0, 7).forEach(([date, dayData], index) => {
+        const row = document.createElement("tr");
+        const verdictClass = getSafetyClass(dayData.verdict);
+        row.className = dayData.verdict ? "ride-row ride-row-safe" : "ride-row ride-row-unsafe";
+
+        row.innerHTML = `
+            <th scope="row">
+                <span class="day-label">${formatDateLabel(date, index)}</span>
+                <small class="d-block text-muted">${formatShortDate(date)}</small>
+            </th>
+            <td>${createWeatherIcons(dayData.am)}</td>
+            <td>${createWeatherIcons(dayData.pm)}</td>
+            <td class="verdict-cell ${verdictClass}">
+                <span class="verdict-pill">${dayData.verdict ? "Yes" : "No"}</span>
+                <span class="certainty-score">${dayData.certainty}%</span>
+                <span class="certainty-bar" aria-label="${getCertaintyLabel(dayData.certainty)} certainty">
+                    <span style="width: ${dayData.certainty}%"></span>
+                </span>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+async function update() {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=55.8575&longitude=-3.169&hourly=temperature_2m,precipitation,wind_speed_10m&forecast_days=7&timezone=auto";
     try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data)
         const processedWeatherData = getWeatherSafety(data);
-
-        // Today = 0; Tomorrow = 1; Next again day = 2
-        const todaysData = processedWeatherData[Object.keys(processedWeatherData)[index]];
-
-        // Update UI
-        ['am', 'pm'].forEach(period => {
-            const periodData = todaysData[period];
-            document.getElementById(`${period}_temp`).style.color = periodData.temp ? "green" : "red";
-            document.getElementById(`${period}_rain`).style.color = periodData.rain ? "green" : "red";
-            document.getElementById(`${period}_wind`).style.color = periodData.wind ? "green" : "red";
-        });
-
-        const verdict = todaysData.verdict;
-        document.getElementById("verdict").style.color = verdict ? "green" : "red";
-        document.getElementById("verdict").innerText = verdict ? "Yes" : "No";
-
-        document.getElementById("date").innerText = `(${index === 0 ? "Today" : "Tomorrow"})`;
-
-        console.log(processedWeatherData);
+        renderWeeklyForecast(processedWeatherData);
     } catch (error) {
         console.log(error);
     }
